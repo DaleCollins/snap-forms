@@ -11,6 +11,5 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'SnapFormController@create')->name('form.create');
+Route::post('/', 'SnapFormController@store')->name('form.store');
