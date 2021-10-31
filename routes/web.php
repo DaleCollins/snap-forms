@@ -13,3 +13,4 @@
 
 Route::get('/', 'SnapFormController@create')->name('form.create');
 Route::post('/', 'SnapFormController@store')->name('form.store');
+Route::get('/thank-you', 'SnapFormController@show')->name('form.thankyou');

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\SnapForm;
+use App\Actions\SendMail;
 use Illuminate\Http\Request;
 
 class SnapFormController extends Controller
@@ -24,5 +25,18 @@ class SnapFormController extends Controller
             'postcode' => 'required|integer'
         ]);
         SnapForm::create($data);
+
+        $mail = (new SendMail($data['email'], "New Patient Information", $data))->execute();
+        if ($mail->getMessage() == "Queued. Thank you.") {
+            return redirect(route('form.thankyou'));
+        }
+        session()->flash('error', 'There was an error sending the form');
+        return redirect()->back();
+
+    }
+
+    public function show()
+    {
+        return view('snapforms.thankyou');
     }
 }
