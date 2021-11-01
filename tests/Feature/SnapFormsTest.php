@@ -22,11 +22,12 @@ class SnapFormsTest extends TestCase
     }
 
     /** @test */
-    public function a_users_data_can_be_added_to_the_database()
+    public function a_users_data_can_be_added_to_the_database_and_they_are_redirected_to_the_thank_you_page()
     {
         $attributes = factory(SnapForm::class)->raw();
-        $this->post(route('form.store', $attributes));
+        $response = $this->post(route('form.store', $attributes));
         $this->assertDatabaseHas('snap_forms', $attributes);
+        $response->assertRedirect(route('form.thankyou'));
     }
 
     /** @test */
